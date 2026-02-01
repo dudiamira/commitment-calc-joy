@@ -4,7 +4,7 @@ import { CategoryInputRow } from '@/components/CategoryInputRow';
 import { SavingsCard, DifferenceCard } from '@/components/SavingsCard';
 import { ActionButtons } from '@/components/ActionButtons';
 import { CATEGORIES } from '@/types/calculator';
-import { Cloud } from 'lucide-react';
+import { Cloud, Calculator } from 'lucide-react';
 
 const Index = () => {
   const {
@@ -14,8 +14,10 @@ const Index = () => {
     updateInput,
     reset,
     loadExample,
+    calculate,
     categorySavings,
     totalSavings,
+    calculated,
     exportCSV,
   } = useCalculator();
 
@@ -55,7 +57,7 @@ const Index = () => {
             </section>
 
             {/* Action Buttons */}
-            <ActionButtons onReset={reset} onLoadExample={loadExample} onExport={exportCSV} />
+            <ActionButtons onReset={reset} onLoadExample={loadExample} onCalculate={calculate} onExport={exportCSV} calculated={calculated} />
 
             {/* Category Inputs */}
             <section>
@@ -81,22 +83,31 @@ const Index = () => {
               Estimated Annual Savings
             </h2>
 
-            <div className="space-y-4">
-              <SavingsCard
-                type="30d"
-                total={totalSavings.annual30d}
-                breakdown={categorySavings}
-              />
-              <SavingsCard
-                type="1y"
-                total={totalSavings.annual1y}
-                breakdown={categorySavings}
-              />
-              <DifferenceCard
-                difference={totalSavings.difference}
-                coveredMonthly={totalSavings.coveredMonthly}
-              />
-            </div>
+            {!calculated ? (
+              <div className="rounded-xl bg-card p-8 border border-border shadow-card text-center">
+                <Calculator className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
+                <p className="text-muted-foreground">
+                  Enter your usage data and click <strong>Calculate</strong> to see your estimated savings.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4 animate-fade-in">
+                <SavingsCard
+                  type="30d"
+                  total={totalSavings.annual30d}
+                  breakdown={categorySavings}
+                />
+                <SavingsCard
+                  type="1y"
+                  total={totalSavings.annual1y}
+                  breakdown={categorySavings}
+                />
+                <DifferenceCard
+                  difference={totalSavings.difference}
+                  coveredMonthly={totalSavings.coveredMonthly}
+                />
+              </div>
+            )}
 
             {/* Disclaimer */}
             <p className="text-xs text-muted-foreground p-4 bg-secondary/50 rounded-lg">

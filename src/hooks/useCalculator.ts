@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
   Provider,
   ProviderData,
@@ -41,9 +41,19 @@ const EXAMPLE_DATA: ProviderData = {
   },
 };
 
+const createEmptyResults = (): { categorySavings: CategorySavings[]; totalSavings: SavingsResult } => ({
+  categorySavings: [],
+  totalSavings: { coveredMonthly: 0, annual30d: 0, annual1y: 0, difference: 0 },
+});
+
 export const useCalculator = () => {
   const [provider, setProvider] = useState<Provider>('aws');
   const [inputs, setInputs] = useState<ProviderData>(createInitialInputs);
+  const [results, setResults] = useState<{
+    categorySavings: CategorySavings[];
+    totalSavings: SavingsResult;
+    calculated: boolean;
+  }>({ ...createEmptyResults(), calculated: false });
 
   const updateInput = useCallback(
     (categoryId: string, field: keyof CategoryInput, value: number) => {
@@ -57,23 +67,27 @@ export const useCalculator = () => {
           },
         },
       }));
+      // Mark as not calculated when inputs change
+      setResults((prev) => ({ ...prev, calculated: false }));
     },
     [provider]
   );
 
   const reset = useCallback(() => {
     setInputs(createInitialInputs());
+    setResults({ ...createEmptyResults(), calculated: false });
   }, []);
 
   const loadExample = useCallback(() => {
     setInputs(EXAMPLE_DATA);
+    setResults((prev) => ({ ...prev, calculated: false }));
   }, []);
 
-  const categorySavings = useMemo((): CategorySavings[] => {
+  const calculate = useCallback(() => {
     const categories = CATEGORIES[provider];
     const providerInputs = inputs[provider];
 
-    return categories.map((cat) => {
+    const categorySavings = categories.map((cat) => {
       const input = providerInputs[cat.id];
       const coveredMonthly = input.monthlyCost * (input.coveragePercent / 100);
       const annual30d = coveredMonthly * DISCOUNT_30D * 12;
@@ -88,10 +102,8 @@ export const useCalculator = () => {
         difference: annual1y - annual30d,
       };
     });
-  }, [provider, inputs]);
 
-  const totalSavings = useMemo((): SavingsResult => {
-    return categorySavings.reduce(
+    const totalSavings = categorySavings.reduce(
       (acc, cat) => ({
         coveredMonthly: acc.coveredMonthly + cat.coveredMonthly,
         annual30d: acc.annual30d + cat.annual30d,
@@ -100,9 +112,13 @@ export const useCalculator = () => {
       }),
       { coveredMonthly: 0, annual30d: 0, annual1y: 0, difference: 0 }
     );
-  }, [categorySavings]);
+
+    setResults({ categorySavings, totalSavings, calculated: true });
+  }, [provider, inputs]);
 
   const exportCSV = useCallback(() => {
+    if (!results.calculated) return;
+
     const categories = CATEGORIES[provider];
     const providerInputs = inputs[provider];
 
@@ -118,7 +134,7 @@ export const useCalculator = () => {
 
     const rows = categories.map((cat) => {
       const input = providerInputs[cat.id];
-      const savings = categorySavings.find((s) => s.categoryId === cat.id)!;
+      const savings = results.categorySavings.find((s) => s.categoryId === cat.id)!;
       return [
         cat.name,
         input.monthlyCost.toFixed(2),
@@ -134,10 +150,10 @@ export const useCalculator = () => {
       'TOTAL',
       '',
       '',
-      totalSavings.coveredMonthly.toFixed(2),
-      totalSavings.annual30d.toFixed(2),
-      totalSavings.annual1y.toFixed(2),
-      totalSavings.difference.toFixed(2),
+      results.totalSavings.coveredMonthly.toFixed(2),
+      results.totalSavings.annual30d.toFixed(2),
+      results.totalSavings.annual1y.toFixed(2),
+      results.totalSavings.difference.toFixed(2),
     ]);
 
     const csv = [headers, ...rows].map((row) => row.join(',')).join('\n');
@@ -148,7 +164,7 @@ export const useCalculator = () => {
     a.download = `cloud-savings-${provider}-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
     URL.revokeObjectURL(url);
-  }, [provider, inputs, categorySavings, totalSavings]);
+  }, [provider, inputs, results]);
 
   return {
     provider,
@@ -157,8 +173,10 @@ export const useCalculator = () => {
     updateInput,
     reset,
     loadExample,
-    categorySavings,
-    totalSavings,
+    calculate,
+    categorySavings: results.categorySavings,
+    totalSavings: results.totalSavings,
+    calculated: results.calculated,
     exportCSV,
   };
 };
