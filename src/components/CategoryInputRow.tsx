@@ -22,7 +22,7 @@ export const CategoryInputRow = ({ category, input, onUpdate }: CategoryInputRow
           <p className="text-sm text-muted-foreground">Includes: {category.description}</p>
         </div>
 
-        {/* Inputs */}
+      {/* Inputs */}
         <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
           {/* Monthly Cost */}
           <div className="flex flex-col gap-1.5">
@@ -35,7 +35,7 @@ export const CategoryInputRow = ({ category, input, onUpdate }: CategoryInputRow
                 type="number"
                 min="0"
                 step="100"
-                value={input.monthlyCost || ''}
+                value={input.monthlyCost}
                 onChange={(e) => handleNumberChange('monthlyCost', e.target.value)}
                 placeholder="0"
                 className="input-field pl-9 w-full sm:w-36"
@@ -54,7 +54,7 @@ export const CategoryInputRow = ({ category, input, onUpdate }: CategoryInputRow
                 min="0"
                 max="100"
                 step="1"
-                value={input.coveragePercent || ''}
+                value={input.coveragePercent}
                 onChange={(e) => handleNumberChange('coveragePercent', e.target.value)}
                 placeholder="0"
                 className="input-field pr-9 w-full sm:w-28"
