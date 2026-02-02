@@ -1,5 +1,6 @@
 import { Category, CategoryInput } from '@/types/calculator';
-import { DollarSign, Percent } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
+import { Slider } from '@/components/ui/slider';
 
 interface CategoryInputRowProps {
   category: Category;
@@ -32,8 +33,8 @@ export const CategoryInputRow = ({ category, input, onUpdate }: CategoryInputRow
           <p className="text-sm text-muted-foreground">Includes: {category.description}</p>
         </div>
 
-      {/* Inputs */}
-        <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
+        {/* Inputs */}
+        <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 sm:items-center">
           {/* Monthly Cost */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
@@ -52,23 +53,23 @@ export const CategoryInputRow = ({ category, input, onUpdate }: CategoryInputRow
             </div>
           </div>
 
-          {/* Coverage % */}
+          {/* Coverage % Slider */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
               Current Coverage
             </label>
-            <div className="relative">
-              <input
-                type="number"
-                min="0"
-                max="100"
-                step="1"
-                value={input.coveragePercent}
-                onChange={(e) => handleNumberChange('coveragePercent', e.target.value)}
-                placeholder="0"
-                className="input-field pr-9 w-full sm:w-28"
+            <div className="flex items-center gap-3 min-w-[180px]">
+              <Slider
+                value={[input.coveragePercent]}
+                onValueChange={(values) => onUpdate('coveragePercent', values[0])}
+                min={0}
+                max={100}
+                step={1}
+                className="flex-1"
               />
-              <Percent className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-medium text-foreground w-10 text-right tabular-nums">
+                {input.coveragePercent}%
+              </span>
             </div>
           </div>
         </div>
