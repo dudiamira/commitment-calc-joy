@@ -89,7 +89,9 @@ export const useCalculator = () => {
 
     const categorySavings = categories.map((cat) => {
       const input = providerInputs[cat.id];
-      const coveredMonthly = input.monthlyCost * (input.coveragePercent / 100);
+      // 0% coverage means full coverage (100%), otherwise use the entered percentage
+      const effectiveCoverage = input.coveragePercent === 0 ? 1 : input.coveragePercent / 100;
+      const coveredMonthly = input.monthlyCost * effectiveCoverage;
       const annual30d = coveredMonthly * DISCOUNT_30D * 12;
       const annual1y = coveredMonthly * DISCOUNT_1Y * 12;
 
