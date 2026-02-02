@@ -36,9 +36,6 @@ export const SavingsCard = ({ type, total, breakdown }: SavingsCardProps) => {
           <h3 className="font-semibold text-foreground">
             {is30d ? '30-Day Commitment' : '1-Year Commitment'}
           </h3>
-          <p className="text-sm text-muted-foreground">
-            {is30d ? '30% discount' : '45% discount'}
-          </p>
         </div>
       </div>
 
@@ -106,20 +103,6 @@ export const DifferenceCard = ({ difference, coveredMonthly }: DifferenceCardPro
           maximumFractionDigits: 0,
         }).format(difference)}
       </p>
-
-      <div className="pt-4 border-t border-border">
-        <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
-          Total Covered Monthly
-        </p>
-        <p className="text-xl font-semibold text-foreground">
-          {new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          }).format(coveredMonthly)}
-        </p>
-      </div>
     </div>
   );
 };
