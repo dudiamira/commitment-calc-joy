@@ -34,7 +34,7 @@ const Index = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">
-                Cloud Commitment Savings Calculator
+                Cloud Commitment Insurance Savings Calculator
               </h1>
               <p className="text-sm text-muted-foreground hidden sm:block">
                 Estimate your yearly savings with 30-day or 1-year commitments
