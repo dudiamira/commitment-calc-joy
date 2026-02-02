@@ -46,7 +46,7 @@ export const CategoryInputRow = ({ category, input, onUpdate }: CategoryInputRow
           {/* Coverage % */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Coverage
+              Current Coverage
             </label>
             <div className="relative">
               <input
