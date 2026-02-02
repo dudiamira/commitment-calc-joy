@@ -3,6 +3,7 @@ import { ProviderTabs } from '@/components/ProviderTabs';
 import { CategoryInputRow } from '@/components/CategoryInputRow';
 import { SavingsCard, DifferenceCard } from '@/components/SavingsCard';
 import { ActionButtons } from '@/components/ActionButtons';
+import { DemoRequestForm } from '@/components/DemoRequestForm';
 import { CATEGORIES } from '@/types/calculator';
 import { Cloud, Calculator } from 'lucide-react';
 
@@ -114,6 +115,9 @@ const Index = () => {
               <strong>Disclaimer:</strong> These are estimates only. Actual savings depend on
               eligible services, commitment terms, and provider-specific pricing rules.
             </p>
+
+            {/* Demo Request Form - shown after calculation */}
+            {calculated && <DemoRequestForm />}
           </div>
         </div>
       </main>
