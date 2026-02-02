@@ -8,8 +8,18 @@ interface CategoryInputRowProps {
 }
 
 export const CategoryInputRow = ({ category, input, onUpdate }: CategoryInputRowProps) => {
+  const formatWithCommas = (value: number): string => {
+    if (value === 0) return '';
+    return new Intl.NumberFormat('en-US').format(value);
+  };
+
+  const parseFormattedNumber = (rawValue: string): number => {
+    const cleanValue = rawValue.replace(/,/g, '');
+    return parseFloat(cleanValue) || 0;
+  };
+
   const handleNumberChange = (field: keyof CategoryInput, rawValue: string) => {
-    const value = parseFloat(rawValue) || 0;
+    const value = parseFormattedNumber(rawValue);
     onUpdate(field, value);
   };
 
@@ -32,10 +42,9 @@ export const CategoryInputRow = ({ category, input, onUpdate }: CategoryInputRow
             <div className="relative">
               <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
-                type="number"
-                min="0"
-                step="100"
-                value={input.monthlyCost}
+                type="text"
+                inputMode="numeric"
+                value={formatWithCommas(input.monthlyCost)}
                 onChange={(e) => handleNumberChange('monthlyCost', e.target.value)}
                 placeholder="0"
                 className="input-field pl-9 w-full sm:w-36"
