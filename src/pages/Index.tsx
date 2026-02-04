@@ -60,22 +60,26 @@ const Index = () => {
             {/* Action Buttons */}
             <ActionButtons onReset={reset} onLoadExample={loadExample} onCalculate={calculate} onExport={exportCSV} calculated={calculated} />
 
-            {/* Category Inputs */}
-            <section>
-              <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">
-                Usage by Category
-              </h2>
-              <div className="space-y-3">
-                {categories.map((category) => (
-                  <CategoryInputRow
-                    key={category.id}
-                    category={category}
-                    input={inputs[category.id]}
-                    onUpdate={(field, value) => updateInput(category.id, field, value)}
-                  />
-                ))}
-              </div>
-            </section>
+            {/* Category Inputs - hidden after calculation, replaced by demo form */}
+            {!calculated ? (
+              <section>
+                <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">
+                  Usage by Category
+                </h2>
+                <div className="space-y-3">
+                  {categories.map((category) => (
+                    <CategoryInputRow
+                      key={category.id}
+                      category={category}
+                      input={inputs[category.id]}
+                      onUpdate={(field, value) => updateInput(category.id, field, value)}
+                    />
+                  ))}
+                </div>
+              </section>
+            ) : (
+              <DemoRequestForm />
+            )}
           </div>
 
           {/* Right Column - Results */}
@@ -116,8 +120,6 @@ const Index = () => {
               eligible services, commitment terms, and provider-specific pricing rules.
             </p>
 
-            {/* Demo Request Form - shown after calculation */}
-            {calculated && <DemoRequestForm />}
           </div>
         </div>
       </main>
