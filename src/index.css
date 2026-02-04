@@ -6,33 +6,34 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
+    /* Naviteq-inspired palette: deep navy, soft blue-gray, coral accent */
+    --background: 210 33% 96%;
+    --foreground: 220 60% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 220 60% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 220 60% 20%;
 
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 220 60% 25%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 210 25% 93%;
+    --secondary-foreground: 220 60% 20%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 210 25% 93%;
+    --muted-foreground: 220 20% 50%;
 
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 18 85% 58%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --border: 210 25% 88%;
+    --input: 210 25% 88%;
+    --ring: 220 60% 25%;
 
     --radius: 0.75rem;
 
@@ -41,51 +42,51 @@
     --azure: 207 89% 42%;
     --gcp: 142 71% 45%;
 
-    /* Savings colors */
-    --savings-30d: 199 89% 48%;
-    --savings-1y: 142 71% 45%;
+    /* Savings colors - matching Naviteq accent tones */
+    --savings-30d: 195 80% 45%;
+    --savings-1y: 160 70% 42%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%) 0%, hsl(199 89% 48%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(220 60% 25%) 0%, hsl(220 50% 35%) 100%);
     --gradient-aws: linear-gradient(135deg, hsl(28 100% 50%) 0%, hsl(35 100% 55%) 100%);
     --gradient-azure: linear-gradient(135deg, hsl(207 89% 42%) 0%, hsl(199 89% 48%) 100%);
     --gradient-gcp: linear-gradient(135deg, hsl(142 71% 45%) 0%, hsl(160 84% 39%) 100%);
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(222 47% 11% / 0.07), 0 2px 4px -2px hsl(222 47% 11% / 0.05);
-    --shadow-lg: 0 10px 15px -3px hsl(222 47% 11% / 0.08), 0 4px 6px -4px hsl(222 47% 11% / 0.05);
-    --shadow-card: 0 1px 3px 0 hsl(222 47% 11% / 0.04), 0 1px 2px -1px hsl(222 47% 11% / 0.04);
+    /* Shadows - softer, more subtle */
+    --shadow-sm: 0 1px 2px 0 hsl(220 60% 20% / 0.04);
+    --shadow-md: 0 4px 6px -1px hsl(220 60% 20% / 0.06), 0 2px 4px -2px hsl(220 60% 20% / 0.04);
+    --shadow-lg: 0 10px 15px -3px hsl(220 60% 20% / 0.07), 0 4px 6px -4px hsl(220 60% 20% / 0.04);
+    --shadow-card: 0 2px 8px 0 hsl(220 60% 20% / 0.06);
   }
 
   .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
+    --background: 220 50% 8%;
+    --foreground: 210 30% 95%;
 
-    --card: 222 47% 9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 50% 12%;
+    --card-foreground: 210 30% 95%;
 
-    --popover: 222 47% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 50% 12%;
+    --popover-foreground: 210 30% 95%;
 
-    --primary: 221 83% 58%;
-    --primary-foreground: 222 47% 6%;
+    --primary: 210 50% 55%;
+    --primary-foreground: 220 50% 8%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 40% 18%;
+    --secondary-foreground: 210 30% 95%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 220 40% 18%;
+    --muted-foreground: 210 20% 65%;
 
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 18 85% 58%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 210 30% 95%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 221 83% 58%;
+    --border: 220 40% 20%;
+    --input: 220 40% 20%;
+    --ring: 210 50% 55%;
   }
 }
 
